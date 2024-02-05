@@ -42,6 +42,6 @@
     "typescript": "~5.3.2"
   },
   "publishConfig": {
-    "ferdinond:registry": "https://npm.pkg.github.com"
+    "@FerdiStro:registry": "https://npm.pkg.github.com"
   }
 }
