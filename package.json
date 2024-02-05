@@ -1,10 +1,11 @@
 {
   "name": "@ferdistro/web-editor",
   "version": "0.0.0",
-  "repository": "git@github.com:ferdistro/web-editor",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ferdistro/web-editor.git"
+  },
   "description": "Web-Text editor for angular projects",
-
-
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -50,5 +51,9 @@
   },
   "main": "index.js",
   "author": "ferdistro",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ferdistro/web-editor/issues"
+  },
+  "homepage": "https://github.com/ferdistro/web-editor#readme"
 }
