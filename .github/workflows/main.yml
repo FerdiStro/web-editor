@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 21
+          node-version: '14'
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
@@ -34,14 +34,29 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 21
-          registry-url: https://npm.pkg.github.com/
-      - run: bash release-script.sh
-      - run: npm ci
-      - run: npm publish --access public
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.TOKEN}}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Publish Package
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.TOKEN}}
-
