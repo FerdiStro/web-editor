@@ -46,4 +46,4 @@ jobs:
       - name: Publish
         run: npx semantic-release
         env:
-          NODE_AUTH_TOKEN: ${{secrets.TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
