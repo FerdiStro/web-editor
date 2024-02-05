@@ -40,5 +40,5 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=\${GH_TOKEN}" > ~/.npmrc
           npm publish --registry https://npm.pkg.github.com/OWNER
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN }}
 
