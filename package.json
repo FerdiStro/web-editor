@@ -1,6 +1,10 @@
 {
   "name": "@ferdistro/web-editor",
   "version": "0.0.0",
+  "repository": "git@github.com:ferdistro/web-editor",
+  "description": "Web-Text editor for angular projects",
+
+
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -42,14 +46,9 @@
     "typescript": "~5.3.2"
   },
   "publishConfig": {
-    "@FerdiStro:registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   },
-  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "web-editor"
-  },
   "author": "ferdistro",
   "license": "ISC"
 }
