@@ -62,7 +62,7 @@ jobs:
         run:  |
           sed -i 's/"name": "@ferdistro\/web-editor"/"name": "@ferdinond\/web-editor"/' package.json
       - name: Log in to npm
-        run: npm login --registry=https://registry.npmjs.org/ --scope=@ferdinond --username ferdinond --password ${{ secrets.NPM_AUTH_TOKEN }}
+        run: npm login --registry=https://registry.npmjs.org/ --scope=@ferdinond --username ferdinond --password ${{ secrets.NPM_TOKEN }}
       - run: npm ci
       - name: Publish to npm
         run: npm publish --access public
