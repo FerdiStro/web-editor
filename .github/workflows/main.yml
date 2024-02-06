@@ -51,16 +51,11 @@ jobs:
       packages: write
       contents: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
-
-
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
       - name: Replace package name
         run: |
           sed -i 's/"name": "@ferdistro\/web-editor"/"name": "@ferdinond\/web-editor"/' package.json
