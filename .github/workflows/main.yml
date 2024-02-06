@@ -1,4 +1,4 @@
-name: Publish Package
+name: Build and Publish
 
 on:
   push:
@@ -6,34 +6,61 @@ on:
       - main
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: 20
+          node-version: 21
 
-      - name: Install dependencies
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build distribution
-        run: npm run build
+      - name: Build
+        run: ng build
 
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
-
-      - name: Publish to GitHub Pages
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
+  publish-github:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
-          github_token: ${{ secrets.TOKEN }}
-          publish_dir: ./dist
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - run: npm publish --access public --registry=https://npm.pkg.github.com/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.TOKEN}}
 
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+      - name: Authenticate with npm
+        run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      - run: npm ci
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
