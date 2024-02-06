@@ -1,6 +1,6 @@
 {
-  "name": "@ferdinond/web-editor",
-  "version": "0.0.11",
+  "name": "@ferdistro/web-editor",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/ferdistro/web-editor.git"
