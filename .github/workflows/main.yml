@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 21
+          node-version: 20
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
@@ -61,8 +61,8 @@ jobs:
       - name: Replace NPM-Name
         run:  |
           sed -i 's/"name": "@ferdistro\/web-editor"/"name": "@ferdinond\/web-editor"/' package.json
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+      - name: Log in to npm
+        run: npm login --registry=https://registry.npmjs.org/ --scope=@ferdinond --username ferdinond --password ${{ secrets.NPM_AUTH_TOKEN }}
       - run: npm ci
       - name: Publish to npm
         run: npm publish --access public
