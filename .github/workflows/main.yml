@@ -58,12 +58,16 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Authenticate with npm
         run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+
       - name: Replace NPM-Name
         run:  |
           sed -i 's/"name": "@ferdistro\/web-editor"/"name": "@ferdinond\/web-editor"/' package.json
-      - name: Set npm token
-        run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+
+      - name: Authenticate with npm
+        run: npm adduser --registry=https://registry.npmjs.org/ --scope=@test12 --token NPM_TOKEN
+
       - run: npm ci
+
       - name: Publish to npm
         run: npm publish --access public
         env:
