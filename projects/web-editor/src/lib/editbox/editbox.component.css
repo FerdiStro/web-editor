@@ -1,0 +1,24 @@
+#content {
+  padding: 5px;
+  display: grid;
+  grid-template-columns:0fr auto;
+  grid-column-gap: 1px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+}
+
+.listInner {
+}
+
+textarea#editor {
+  outline: none;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  box-sizing: border-box;
+}
