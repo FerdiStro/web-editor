@@ -1,8 +1,16 @@
 #content {
-  padding: 5px;
+  font-size: 22px;
+  padding: 10px;
   display: grid;
   grid-template-columns:0fr auto;
   grid-column-gap: 1px;
+  position: relative;
+  /*background-color: #4eaaf5;*/
+
+  height: 96vh;
+
+
+
 }
 
 .list {
@@ -10,15 +18,34 @@
   flex-direction: column;
   box-sizing: border-box;
 
+
+}
+.listDown{
+  top: 3px;
+
+}
+#editorDown{
+  position: absolute;
+  width: 100%;
 }
 
-.listInner {
+#listStyle{
+  width: 40px;
+  padding: 2px;
 }
 
-textarea#editor {
+
+
+
+
+#textarea {
+  position: relative;
+  top: -2px;
+  padding: 2px;
   outline: none;
   width: 100%;
   resize: none;
   overflow: hidden;
-  box-sizing: border-box;
+
+  /*tab-size: 2;*/
 }
