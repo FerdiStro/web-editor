@@ -12,9 +12,8 @@ import {EditboxComponent} from "./editbox/editbox.component";
   ],
   template: `
     <div id="content">
-      test
-<!--      <toolbar ></toolbar>-->
-      <editbox [text]="text"></editbox>
+      <toolbar (toggleEvent)="onToggleStatusChange($event)"></toolbar>
+      <editbox [valid]="toolbarToggleStatus" [text]="text"></editbox>
     </div>
 
   `,
@@ -22,7 +21,7 @@ import {EditboxComponent} from "./editbox/editbox.component";
     #content{
       overflow: hidden;
       width: 100%;
-      background-color: pink;
+      /*background-color: pink;*/
       padding: 5px;
 
     }
@@ -35,6 +34,11 @@ export class WebEditorComponent {
   text:string ="";
 
 
+  protected readonly toolbar = toolbar;
 
+  toolbarToggleStatus: boolean = false;
 
+  onToggleStatusChange(status: boolean) {
+    this.toolbarToggleStatus = status;
+  }
 }
