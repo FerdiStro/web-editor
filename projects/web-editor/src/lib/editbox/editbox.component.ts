@@ -43,6 +43,8 @@ export class EditboxComponent implements  OnChanges{
   }
 
   onInput(event: Event) {
+    console.log("test")
+
 
     const editedContent = (event.target as HTMLElement).textContent;
     this.text = editedContent || '';

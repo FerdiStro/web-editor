@@ -1,17 +1,27 @@
 #content {
+  position: relative;
   font-size: 22px;
   padding: 10px;
   display: grid;
   grid-template-columns:0fr auto;
   grid-column-gap: 1px;
-  position: relative;
   /*background-color: #4eaaf5;*/
 
-  height: 96vh;
+  width: 200px;
+  height: 500px;
 
+
+
+
+  overflow:scroll;
+
+  /*scrollbar-width: thin;*/
+  scrollbar-color: red transparent;
+  scrollbar-width: thin;
 
 
 }
+
 
 .list {
   display: flex;
