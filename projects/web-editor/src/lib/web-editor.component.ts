@@ -39,6 +39,10 @@ import {EditboxComponent} from "./editbox/editbox.component";
 
 
     }
+    ::ng-deep .highlighted-text{
+      background-color: yellow;
+    }
+
 
 
 

@@ -53,6 +53,10 @@
   top: 3px;
 
 }
+
+
+
+
 #editorDown{
   position: absolute;
   width: 100%;
@@ -63,8 +67,14 @@
   padding: 2px;
 }
 
+::selection {
+  background-color: yellow;
+  color: black;
+}
 
-
+.highlight {
+  background-color: yellow !important;
+}
 
 
 #textarea {
@@ -75,6 +85,10 @@
   width: 100%;
   resize: none;
   overflow: hidden;
+
+  /*background-color: red;*/
+
+
 }
 
 #errorMessage{

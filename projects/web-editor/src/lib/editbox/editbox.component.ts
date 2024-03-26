@@ -2,16 +2,17 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   Input,
-  OnChanges,
-  Output,
+  OnChanges, Renderer2,
+  SecurityContext,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import * as yaml from 'js-yaml';
+import {DomSanitizer} from "@angular/platform-browser";
+import {HighlighterPipe} from "../highlighter.pipe";
 
 
 @Component({
@@ -21,40 +22,43 @@ import * as yaml from 'js-yaml';
     NgForOf,
     FormsModule,
     NgStyle,
-    NgIf
+    NgIf,
+    HighlighterPipe
   ],
   templateUrl: './editbox.component.html',
   styleUrl: './editbox.component.css'
 })
-export class EditboxComponent implements AfterViewInit,  OnChanges{
+export class EditboxComponent implements AfterViewInit,  OnChanges {
 
   /*
     Outer Inputs
    */
   @Input() text: string = '';
-  @Input()  errorMessage:boolean  = false
+  @Input() errorMessage: boolean = false
 
   /*
     Buttons
    */
   @Input() valid: boolean = false;
-  @Input() undoPress: boolean  = false;
-  @Input() redoPress: boolean  = false;
+  @Input() undoPress: boolean = false;
+  @Input() redoPress: boolean = false;
 
 
   /*
     Edit Window
    */
   textLines: string[] = [];
-  lines:number = 0;
+  lines: number = 0;
 
-
+  /*
+     Search-funktion
+   */
+  searchText: string = '';
+  @Input() searchType:string  = 'full'
 
 
 
   @ViewChild('textarea') textarea!: ElementRef;
-
-
 
 
   editorLines(): number[] {
@@ -66,7 +70,7 @@ export class EditboxComponent implements AfterViewInit,  OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['text'] != undefined){
+    if (changes['text'] != undefined) {
       if (changes['text'].currentValue && changes['text']) {
         this.textLines = this.text.split("\n")
         this.lines = this.textLines.length
@@ -84,15 +88,17 @@ export class EditboxComponent implements AfterViewInit,  OnChanges{
     }
     this.validOnChange();
   }
-    textValidStyle =  {
+
+  textValidStyle = {
     'border': '1px solid gray'
   };
 
-  errorString:string = '';
+  errorString: string = '';
+
   validOnChange(): void {
     let val = false;
 
-    if(this.valid){
+    if (this.valid) {
       try {
         JSON.parse(this.text);
         val = true;
@@ -100,34 +106,33 @@ export class EditboxComponent implements AfterViewInit,  OnChanges{
       } catch (error) {
         val = false;
         // @ts-ignore
-        let test =  error.toString();
+        let test = error.toString();
         this.errorString = test
         // test.split("column")[1].split(")")[0];
       }
     }
-    if(!this.valid){
+    if (!this.valid) {
       try {
         yaml.load(this.text)
         val = true;
-      }catch (error) {
+      } catch (error) {
         val = false;
         // @ts-ignore
         this.errorString = error.toString()
       }
     }
 
-    if(!val){
+    if (!val) {
       this.textValidStyle = {
-        'border':'1px solid red'
+        'border': '1px solid red'
       };
-    }else {
+    } else {
       this.errorString = 'Valid'
       this.textValidStyle = {
-        'border':'1px solid grey'
+        'border': '1px solid grey'
       };
     }
   }
-
 
 
   onKeyDown(event: KeyboardEvent): void {
@@ -138,10 +143,13 @@ export class EditboxComponent implements AfterViewInit,  OnChanges{
       event.preventDefault();
       document.execCommand('insertText', false, '\t');
     }
-    if (event.key == 'Enter'){
+    if (event.key == 'Enter') {
       event.preventDefault();
       document.execCommand('insertText', false, '\n');
     }
+    const outerHTML = (event.target as HTMLElement).outerHTML;
+    this.lines = outerHTML.split("</div>").length + outerHTML.split("<br>").length - outerHTML.split("<br></div>").length - 1;
+    this.validOnChange();
   }
 
   get renderedTextLines(): string {
@@ -152,8 +160,13 @@ export class EditboxComponent implements AfterViewInit,  OnChanges{
     return unsafe.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/\t/g, '&emsp;');
+      .replace(/\t/g, '&emsp;')
   }
+
+
+
+
+
 
 
 
