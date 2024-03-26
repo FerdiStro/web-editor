@@ -7,8 +7,11 @@
   </div>
 
 
-  <div class="listDown" contentEditable="true" [ngStyle]="textValidStyle" id="textarea" (input)="onInput($event)" (keydown)="onKeyDown($event)" [innerHTML]="renderedTextLines">
+<!--  <div class="listDown" #textarea contentEditable="true" [ngStyle]="textValidStyle" id="textarea" (input)="onInput($event)" (keydown)="onKeyDown($event)" [innerHTML]="renderedTextLines">-->
+    <div class="listDown" #textarea contentEditable="true" [ngStyle]="textValidStyle" id="textarea"  (keydown)="onKeyDown($event)" [innerHTML]="renderedTextLines">
+
   </div>
+
 
 
 
@@ -17,8 +20,7 @@
 </div>
 
 
+<div *ngIf="errorMessage" id="errorMessage">
+  {{errorString}}
+</div>
 
-<!--<div id="errorMessage">-->
-<!--  {{errorString}}-->
-
-<!--</div>-->

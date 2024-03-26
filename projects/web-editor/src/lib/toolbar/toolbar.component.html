@@ -1,7 +1,13 @@
-<div>
+<div class="toolButton">
   <label class="toggle">
     <input type="checkbox" (change)="toggleSwitch()">
     <span class="slider"></span>
     <span class="labels" data-on="JSON" data-off="YAML"></span>
   </label>
+</div>
+<div class="toolButton">
+
+  <img  (click)="pressToolButton(0)" class="button"  src="https://img.icons8.com/ios-glyphs/30/undo.png" alt="undo"/>
+  <img  (click)="pressToolButton(1)" class="button"  src="https://img.icons8.com/ios-glyphs/30/redo.png" alt="redo"/>
+
 </div>

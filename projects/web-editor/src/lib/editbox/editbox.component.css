@@ -7,8 +7,19 @@
   grid-column-gap: 1px;
   /*background-color: #4eaaf5;*/
 
-  width: 200px;
-  height: 500px;
+  /*width: 200px;*/
+
+  width: 100%;
+  /*height: calc(96vh - 20vh);*/
+  height: 80vh;
+
+
+  /*background-color: red;*/
+
+
+  /*width: 1800px;*/
+
+  /*height: 500px;*/
 
 
 
@@ -16,10 +27,18 @@
   overflow:scroll;
 
   /*scrollbar-width: thin;*/
-  scrollbar-color: red transparent;
+  scrollbar-color: gray transparent;
   scrollbar-width: thin;
 
 
+}
+
+#content::-webkit-scrollbar {
+  width: 3px; /* Breite des Scrollbalkens */
+}
+
+#content::-webkit-scrollbar-thumb {
+  background-color: gray; /* Farbe des Scrollbalken-Thumb */
 }
 
 
@@ -56,6 +75,14 @@
   width: 100%;
   resize: none;
   overflow: hidden;
+}
 
-  /*tab-size: 2;*/
+#errorMessage{
+
+  background-color: gray;
+  position: relative;
+  /*top: -0vh;*/
+  /*left: 40px;*/
+  width: 100%;
+  padding: 10px;
 }

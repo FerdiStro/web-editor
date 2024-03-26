@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {ToolbarComponent} from "./toolbar/toolbar.component";
 import {EditboxComponent} from "./editbox/editbox.component";
 
@@ -12,9 +12,9 @@ import {EditboxComponent} from "./editbox/editbox.component";
   ],
   template: `
     <div id="content">
-      <toolbar (toggleEvent)="onToggleStatusChange($event)"></toolbar>
+      <toolbar [reset]="numToggle" (toolButtonEvent)="onPressToolButton($event)" (toggleEvent)="onToggleStatusChange($event)"></toolbar>
       <div id="editBox" >
-        <editbox [valid]="toolbarToggleStatus" [text]="text"></editbox>
+        <editbox [errorMessage]="errorMessage" [valid]="toolbarToggleStatus" [text]="text" [buttonNumber]="buttonId" (resetButton)="resetButton($event)" ></editbox>
       </div>
     </div>
 
@@ -22,11 +22,10 @@ import {EditboxComponent} from "./editbox/editbox.component";
   styles: `
     #content{
       overflow: hidden;
-      width: 100%;
-      height: 100%;
+      width: calc(100% - 20px);
       padding: 5px;
       border:1px solid black;
-
+      height: 100%;
     }
 
     #editBox{
@@ -35,7 +34,8 @@ import {EditboxComponent} from "./editbox/editbox.component";
       /*width: 100%;*/
       /*height: 90%;*/
       /*background-color: red;*/
-      margin-right: 200px;
+      /*margin-right: 200px;*/
+      width: calc(100% - 20px);
 
 
     }
@@ -44,17 +44,40 @@ import {EditboxComponent} from "./editbox/editbox.component";
 
   `
 })
-export class WebEditorComponent {
+export class WebEditorComponent  implements AfterViewInit{
 
   @Input()
   text:string ="";
 
+  @Input()
+  errorMessage:boolean = false
 
-  // protected readonly toolbar = toolbar;
+
+
+  buttonId: number = 0
+  onPressToolButton(buttonId: number) {
+      this.buttonId = buttonId;
+
+  }
 
   toolbarToggleStatus: boolean = false;
-
   onToggleStatusChange(status: boolean) {
     this.toolbarToggleStatus = status;
   }
+
+  numToggle:number = 0;
+  resetButton(num:number){
+    if(this.after){
+      this.numToggle = this.numToggle +1 ;
+    }
+  }
+
+  after:boolean  = false
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.after = true;
+    });
+
+  }
+
 }
