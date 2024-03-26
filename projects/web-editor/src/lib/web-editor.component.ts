@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {ToolbarComponent} from "./toolbar/toolbar.component";
 import {EditboxComponent} from "./editbox/editbox.component";
 
@@ -12,19 +12,35 @@ import {EditboxComponent} from "./editbox/editbox.component";
   ],
   template: `
     <div id="content">
-      <toolbar (toggleEvent)="onToggleStatusChange($event)"></toolbar>
-      <editbox [valid]="toolbarToggleStatus" [text]="text"></editbox>
+      <toolbar (toggleRedoEvent)="onToggleRedoButton($event)" (toggleUndoEvent)="onToggleUndoButton($event)" (toggleEvent)="onToggleStatusChange($event)"></toolbar>
+      <div id="editBox" >
+        <editbox [errorMessage]="errorMessage" [undoPress]="undoButton" [redoPress]="redoButton"  [valid]="toolbarToggleStatus" [text]="text"  ></editbox>
+      </div>
     </div>
 
   `,
   styles: `
     #content{
       overflow: hidden;
-      width: 100%;
-      /*background-color: pink;*/
+      width: calc(100% - 20px);
       padding: 5px;
+      border:1px solid black;
+      height: 100%;
+    }
+
+    #editBox{
+      /*float: right;*/
+
+      /*width: 100%;*/
+      /*height: 90%;*/
+      /*background-color: red;*/
+      /*margin-right: 200px;*/
+      width: calc(100% - 20px);
+
 
     }
+
+
 
   `
 })
@@ -33,12 +49,25 @@ export class WebEditorComponent {
   @Input()
   text:string ="";
 
+  @Input()
+  errorMessage:boolean = false
 
-  protected readonly toolbar = toolbar;
 
   toolbarToggleStatus: boolean = false;
-
   onToggleStatusChange(status: boolean) {
     this.toolbarToggleStatus = status;
   }
+
+  undoButton:boolean  =false;
+  onToggleUndoButton(status: boolean){
+    console.log(status)
+    this.undoButton = status;
+  }
+
+  redoButton:boolean  = false;
+  onToggleRedoButton(status: boolean){
+    this.redoButton = status;
+  }
+
+
 }

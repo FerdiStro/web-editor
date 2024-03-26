@@ -1,8 +1,17 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges} from '@angular/core';
-import {NgForOf, NgStyle} from "@angular/common";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import * as yaml from 'js-yaml';
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 
 @Component({
@@ -11,54 +20,71 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
   imports: [
     NgForOf,
     FormsModule,
-    NgStyle
+    NgStyle,
+    NgIf
   ],
   templateUrl: './editbox.component.html',
   styleUrl: './editbox.component.css'
 })
-export class EditboxComponent implements  OnChanges{
+export class EditboxComponent implements AfterViewInit,  OnChanges{
 
-
-
-
+  /*
+    Outer Inputs
+   */
   @Input() text: string = '';
+  @Input()  errorMessage:boolean  = false
+
+  /*
+    Buttons
+   */
+  @Input() valid: boolean = false;
+  @Input() undoPress: boolean  = false;
+  @Input() redoPress: boolean  = false;
+
+
+  /*
+    Edit Window
+   */
   textLines: string[] = [];
   lines:number = 0;
 
-  @Input() valid: boolean = false;
+
+
+
+
+  @ViewChild('textarea') textarea!: ElementRef;
+
+
 
 
   editorLines(): number[] {
     return Array.from({length: this.lines}, (_, index) => index);
   }
 
+  ngAfterViewInit() {
+    // this.history()
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['text'] != undefined){
       if (changes['text'].currentValue && changes['text']) {
         this.textLines = this.text.split("\n")
-        this.lines = this.text.split("\n").length
+        this.lines = this.textLines.length
       }
+    }
+
+    if (changes['buttonNumber'] != undefined) {
+
+    }
+    if (changes['undoPress'] != undefined) {
+      document.execCommand('undo');
+    }
+    if (changes['redoPress'] != undefined) {
+      document.execCommand('redo');
     }
     this.validOnChange();
   }
-
-  onInput(event: Event) {
-
-    const editedContent = (event.target as HTMLElement).textContent;
-    this.text = editedContent || '';
-
-    const test = (event.target as HTMLElement).outerHTML;
-
-
-
-    this.lines = test.split("</div>").length + test.split("<br>").length - test.split("<br></div>").length - 1;
-
-
-    this.validOnChange();
-
-  }
-
-  textValidStyle =  {
+    textValidStyle =  {
     'border': '1px solid gray'
   };
 
@@ -76,28 +102,17 @@ export class EditboxComponent implements  OnChanges{
         // @ts-ignore
         let test =  error.toString();
         this.errorString = test
-
-
-        let col = test.split("column")[1].split(")")[0];
-        console.log(col)
-
-
-
-
-
+        // test.split("column")[1].split(")")[0];
       }
     }
     if(!this.valid){
       try {
         yaml.load(this.text)
         val = true;
-
-
       }catch (error) {
         val = false;
         // @ts-ignore
-        let test =  error.toString();
-        this.errorString = test
+        this.errorString = error.toString()
       }
     }
 
@@ -107,17 +122,11 @@ export class EditboxComponent implements  OnChanges{
       };
     }else {
       this.errorString = 'Valid'
-
-
       this.textValidStyle = {
         'border':'1px solid grey'
       };
     }
-
   }
-
-
-
 
 
 
@@ -128,17 +137,16 @@ export class EditboxComponent implements  OnChanges{
     if (event.key === 'Tab') {
       event.preventDefault();
       document.execCommand('insertText', false, '\t');
-
+    }
+    if (event.key == 'Enter'){
+      event.preventDefault();
+      document.execCommand('insertText', false, '\n');
     }
   }
 
   get renderedTextLines(): string {
-    return this.textLines.map(line => this.escapeHtml(line)).join('<br>'); // Konvertiert Textzeilen in HTML mit <br> für Zeilenumbrüche
+    return  this.textLines.map(line => this.escapeHtml(line)).join('<br>');
   }
-
-
-
-
 
   escapeHtml(unsafe: string): string {
     return unsafe.replace(/&/g, '&amp;')
@@ -146,8 +154,6 @@ export class EditboxComponent implements  OnChanges{
       .replace(/>/g, '&gt;')
       .replace(/\t/g, '&emsp;');
   }
-
-
 
 
 

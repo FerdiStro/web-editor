@@ -1,4 +1,6 @@
-
+/*
+  YAML/JSON-Button
+*/
 
 .toggle {
   --width: 80px;
@@ -86,4 +88,29 @@
 
 .toggle input:checked~.labels::before {
   opacity: 1;
+}
+
+
+/*
+  Style
+*/
+
+.toolButton{
+  position: relative;
+  display: inline-block;
+  margin-right: 50px;
+  /*background-color: red;*/
+
+}
+.button{
+  margin-right: 10px;
+  cursor: pointer;
+  transition-property: transform;
+  transition-duration: 300ms;
+  width: 20px;
+}
+
+.button:hover{
+  transform: scale(1.1);
+
 }
