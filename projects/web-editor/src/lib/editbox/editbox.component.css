@@ -51,7 +51,9 @@
 }
 .listDown{
   top: 3px;
-
+}
+.editor{
+  top: 3px;
 }
 
 
@@ -68,9 +70,10 @@
 }
 
 ::selection {
-  background-color: yellow;
   color: black;
+  background-color: #cbcbcb;
 }
+
 
 .highlight {
   background-color: yellow !important;

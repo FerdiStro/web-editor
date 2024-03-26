@@ -114,3 +114,50 @@
   transform: scale(1.1);
 
 }
+
+
+#searchContent {
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  top: -5px;
+
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchSection {
+  margin-left: auto;
+}
+
+#searchContent {
+  position: relative;
+}
+
+.input-container {
+  position: relative;
+}
+
+#searchLabel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+  margin-top: 5px;
+  color: #c0c0c0;
+  z-index: 1;
+}
+
+.hide {
+  display: none; /* Das Label ausblenden, wenn das Eingabefeld nicht leer ist */
+}
+
+#searchContent input:focus + #searchLabel {
+  z-index: -1; /* Setzen Sie den z-index-Wert des Labels auf einen niedrigeren Wert, wenn das Eingabefeld den Fokus hat */
+}
+
+

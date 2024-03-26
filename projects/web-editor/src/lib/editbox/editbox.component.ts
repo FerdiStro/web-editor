@@ -53,7 +53,7 @@ export class EditboxComponent implements AfterViewInit,  OnChanges {
   /*
      Search-funktion
    */
-  searchText: string = '';
+  @Input() searchText: string = '';
   @Input() searchType:string  = 'full'
 
 
@@ -150,7 +150,28 @@ export class EditboxComponent implements AfterViewInit,  OnChanges {
     const outerHTML = (event.target as HTMLElement).outerHTML;
     this.lines = outerHTML.split("</div>").length + outerHTML.split("<br>").length - outerHTML.split("<br></div>").length - 1;
     this.validOnChange();
+
+    //todo: update list
+    // this.textLines.push("\ttest\n")
+    const divElement = document.querySelector('.editor');
+    if (divElement != null) {
+      const aktualisierterText = divElement.innerHTML;
+      console.log(this.convertHtmlToPlainText(aktualisierterText));
+    }
+
+
+
   }
+  //Convert Methode!!!!
+  convertHtmlToPlainText(htmlText: string) {
+    let plainText = htmlText.replace(/<br\s*\/?>/g, '\n');
+    plainText = plainText.replace(/<\/?div.*?>/g, '\n');
+    plainText = plainText.replace(/<[^>]*>/g, '');
+    return plainText;
+  }
+
+
+
 
   get renderedTextLines(): string {
     return  this.textLines.map(line => this.escapeHtml(line)).join('<br>');
