@@ -12,40 +12,33 @@ import {NgOptimizedImage} from "@angular/common";
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css'
 })
-export class ToolbarComponent implements OnChanges {
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['reset']){
-      this.countButton =  0;
-    }
-  }
+export class ToolbarComponent  {
 
+  // YAML/JSON-Button
   @Output() toggleEvent: EventEmitter<boolean> =  new EventEmitter<boolean>();
   toggleState: boolean = false;
-
-  @Output()  toolButtonEvent: EventEmitter<number> = new EventEmitter<number>()
-
-
-  countButton :  number =  0;
-
-  @Input()
-  reset: number  = 0 ;
-
-
-
-  pressUndoButton(buttonId: number){
-    if(buttonId == 0){
-      this.countButton  = this.countButton - 1;
-    }
-    if(buttonId == 1){
-      this.countButton  = this.countButton + 1;
-
-    }
-    this.toolButtonEvent.emit(this.countButton);
-  }
-  // true = JSON false = Yaml
   toggleSwitch() {
     this.toggleState = !this.toggleState;
     this.toggleEvent.emit(this.toggleState);
   }
+
+  // Undo-Button
+  @Output() toggleUndoEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  toggleUndoState:boolean  = false
+  toggleUndo(){
+    this.toggleUndoState  = !this.toggleUndoState;
+    this.toggleUndoEvent.emit(this.toggleUndoState);
+  }
+
+
+  // Redo-Button
+  @Output() toggleRedoEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  toggleRedoState:boolean  = false;
+  toggleRedo(){
+    this.toggleRedoState = !this.toggleRedoState;
+    this.toggleRedoEvent.emit(this.toggleRedoState);
+  }
+
+
 
 }

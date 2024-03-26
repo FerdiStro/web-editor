@@ -12,9 +12,9 @@ import {EditboxComponent} from "./editbox/editbox.component";
   ],
   template: `
     <div id="content">
-      <toolbar [reset]="numToggle" (toolButtonEvent)="onPressToolButton($event)" (toggleEvent)="onToggleStatusChange($event)"></toolbar>
+      <toolbar (toggleRedoEvent)="onToggleRedoButton($event)" (toggleUndoEvent)="onToggleUndoButton($event)" (toggleEvent)="onToggleStatusChange($event)"></toolbar>
       <div id="editBox" >
-        <editbox [errorMessage]="errorMessage" [valid]="toolbarToggleStatus" [text]="text" [buttonNumber]="buttonId" (resetButton)="resetButton($event)" ></editbox>
+        <editbox [errorMessage]="errorMessage" [undoPress]="undoButton" [redoPress]="redoButton"  [valid]="toolbarToggleStatus" [text]="text"  ></editbox>
       </div>
     </div>
 
@@ -44,7 +44,7 @@ import {EditboxComponent} from "./editbox/editbox.component";
 
   `
 })
-export class WebEditorComponent  implements AfterViewInit{
+export class WebEditorComponent {
 
   @Input()
   text:string ="";
@@ -53,31 +53,21 @@ export class WebEditorComponent  implements AfterViewInit{
   errorMessage:boolean = false
 
 
-
-  buttonId: number = 0
-  onPressToolButton(buttonId: number) {
-      this.buttonId = buttonId;
-
-  }
-
   toolbarToggleStatus: boolean = false;
   onToggleStatusChange(status: boolean) {
     this.toolbarToggleStatus = status;
   }
 
-  numToggle:number = 0;
-  resetButton(num:number){
-    if(this.after){
-      this.numToggle = this.numToggle +1 ;
-    }
+  undoButton:boolean  =false;
+  onToggleUndoButton(status: boolean){
+    console.log(status)
+    this.undoButton = status;
   }
 
-  after:boolean  = false
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.after = true;
-    });
-
+  redoButton:boolean  = false;
+  onToggleRedoButton(status: boolean){
+    this.redoButton = status;
   }
+
 
 }
