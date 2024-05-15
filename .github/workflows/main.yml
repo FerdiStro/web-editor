@@ -28,11 +28,9 @@ jobs:
 
       - name: Build
         run: ng build
-
-      - name: nav
-        run:  cd dist/web-editor/
-
+        
       - name: Publish to NPM
+        working-directory: dist/web-editor
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
