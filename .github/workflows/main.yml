@@ -25,6 +25,14 @@ jobs:
 
       - name: Build
         run: ng build
+       # Debugging steps
+      - name: Show NPM config
+        run: npm config ls
+
+      - name: Whoami
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  
 
       - name: Publish to NPM
         run: npm publish
