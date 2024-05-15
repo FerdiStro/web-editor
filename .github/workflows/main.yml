@@ -1,32 +1,33 @@
-#name: Build and Publish
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout Repository
-#        uses: actions/checkout@v2
-#
-#      - name: Set up Node.js
-#        uses: actions/setup-node@v2
-#        with:
-#          node-version: 20
-#
-#      - name: Install Angular CLI
-#        run: npm install -g @angular/cli
-#
-#      - name: Install Dependencies
-#        run: npm install
-#
-#      - name: Build
-#        run: ng build
-#
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: ng build
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 #  publish-github:
 #    needs: build
 #    runs-on: ubuntu-latest
@@ -44,23 +45,3 @@
 #        env:
 #          NODE_AUTH_TOKEN: ${{secrets.TOKEN}}
 #
-#  publish-npm:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    permissions:
-#      packages: write
-#      contents: read
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: '20'
-#          registry-url: 'https://registry.npmjs.org'
-#      - name: Replace package name
-#        run: |
-#          sed -i 's/"name": "@ferdistro\/web-editor"/"name": "@ferdinond\/web-editor"/' package.json
-#
-#      - run: npm ci
-#      - run: npm publish
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
