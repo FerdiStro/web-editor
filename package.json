@@ -1,5 +1,5 @@
 {
-  "name": "web-editor",
+  "name": "@ferdinond/web-editor",
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",
