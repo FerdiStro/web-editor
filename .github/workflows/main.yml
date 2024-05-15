@@ -29,6 +29,9 @@ jobs:
       - name: Build
         run: ng build
 
+      - name: nav
+        run:  cd dist/web-editor/
+
       - name: Publish to NPM
         run: npm publish --access public
         env:
