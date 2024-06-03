@@ -11,8 +11,9 @@ import {
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import * as yaml from 'js-yaml';
-import {DomSanitizer} from "@angular/platform-browser";
 import {HighlighterPipe} from "../highlighter.pipe";
+import {WebEditorService} from "../web-editor.service";
+import {convertElementSourceSpanToLoc} from "@angular-eslint/template-parser/dist/convert-source-span-to-loc";
 
 
 @Component({
@@ -29,6 +30,10 @@ import {HighlighterPipe} from "../highlighter.pipe";
   styleUrl: './editbox.component.css'
 })
 export class EditboxComponent implements AfterViewInit,  OnChanges {
+
+  constructor(private service: WebEditorService) {
+  }
+
 
   /*
     Outer Inputs
@@ -72,6 +77,7 @@ export class EditboxComponent implements AfterViewInit,  OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['text'] != undefined) {
       if (changes['text'].currentValue && changes['text']) {
+        this.service.setData(this.text)
         this.textLines = this.text.split("\n")
         this.lines = this.textLines.length
       }
@@ -96,6 +102,7 @@ export class EditboxComponent implements AfterViewInit,  OnChanges {
   errorString: string = '';
 
   validOnChange(): void {
+
     let val = false;
 
     if (this.valid) {
@@ -156,8 +163,14 @@ export class EditboxComponent implements AfterViewInit,  OnChanges {
     const divElement = document.querySelector('.editor');
     if (divElement != null) {
       const aktualisierterText = divElement.innerHTML;
-      console.log(this.convertHtmlToPlainText(aktualisierterText));
+      // console.log(this.convertHtmlToPlainText(aktualisierterText));
     }
+
+
+    //Data Service
+    this.service.setData(this.text)
+
+
 
 
 

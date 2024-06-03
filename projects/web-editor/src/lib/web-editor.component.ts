@@ -64,7 +64,6 @@ export class WebEditorComponent {
 
   undoButton:boolean  =false;
   onToggleUndoButton(status: boolean){
-    console.log(status)
     this.undoButton = status;
   }
 
@@ -75,7 +74,7 @@ export class WebEditorComponent {
 
   searchText:string = ''
   onToggleSearchBar(searchText: string){
-    console.log("APP: " + searchText);
+    // console.log("APP: " + searchText);
     this.searchText  = searchText;
   }
 
