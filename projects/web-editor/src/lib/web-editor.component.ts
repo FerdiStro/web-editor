@@ -12,9 +12,9 @@ import {EditboxComponent} from "./editbox/editbox.component";
   ],
   template: `
     <div id="content">
-      <toolbar (toggleRedoEvent)="onToggleRedoButton($event)" (toggleUndoEvent)="onToggleUndoButton($event)" (toggleEvent)="onToggleStatusChange($event)"></toolbar>
+      <toolbar (toggleSearchBarEvent)="onToggleSearchBar($event)"  (toggleRedoEvent)="onToggleRedoButton($event)" (toggleUndoEvent)="onToggleUndoButton($event)" (toggleEvent)="onToggleStatusChange($event)"></toolbar>
       <div id="editBox" >
-        <editbox [errorMessage]="errorMessage" [undoPress]="undoButton" [redoPress]="redoButton"  [valid]="toolbarToggleStatus" [text]="text"  ></editbox>
+        <editbox [searchText]="searchText" [errorMessage]="errorMessage" [undoPress]="undoButton" [redoPress]="redoButton"  [valid]="toolbarToggleStatus" [text]="text"  ></editbox>
       </div>
     </div>
 
@@ -39,6 +39,10 @@ import {EditboxComponent} from "./editbox/editbox.component";
 
 
     }
+    ::ng-deep .highlighted-text{
+      background-color: yellow;
+    }
+
 
 
 
@@ -60,7 +64,6 @@ export class WebEditorComponent {
 
   undoButton:boolean  =false;
   onToggleUndoButton(status: boolean){
-    console.log(status)
     this.undoButton = status;
   }
 
@@ -68,6 +71,14 @@ export class WebEditorComponent {
   onToggleRedoButton(status: boolean){
     this.redoButton = status;
   }
+
+  searchText:string = ''
+  onToggleSearchBar(searchText: string){
+    // console.log("APP: " + searchText);
+    this.searchText  = searchText;
+  }
+
+
 
 
 }

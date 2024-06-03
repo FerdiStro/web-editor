@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content" >
 
   <div class="listDown" id="listStyle">
     <div class="list" *ngFor="let index of editorLines()">
@@ -7,13 +7,14 @@
   </div>
 
 
-<!--  <div class="listDown" #textarea contentEditable="true" [ngStyle]="textValidStyle" id="textarea" (input)="onInput($event)" (keydown)="onKeyDown($event)" [innerHTML]="renderedTextLines">-->
-    <div class="listDown" #textarea contentEditable="true" [ngStyle]="textValidStyle" id="textarea"  (keydown)="onKeyDown($event)" [innerHTML]="renderedTextLines">
-
-  </div>
 
 
 
+  <div class="editor"  #textarea contentEditable="true" [ngStyle]="textValidStyle" id="textarea" (keydown)="onKeyDown($event)" [innerHTML]="renderedTextLines| highlighter:searchText:'notful'"></div>
+
+<!--  <div class="search-input">-->
+<!--    <label >Search here: </label> <input [(ngModel)]="searchText" type="search">-->
+<!--  </div>-->
 
 
 

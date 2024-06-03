@@ -1,13 +1,37 @@
-<div class="toolButton">
-  <label class="toggle">
-    <input type="checkbox" (change)="toggleSwitch()">
-    <span class="slider"></span>
-    <span class="labels" data-on="JSON" data-off="YAML"></span>
-  </label>
-</div>
-<div class="toolButton">
+<div class="container">
+  <div class="toolButton">
+    <label class="toggle">
+      <input type="checkbox" (change)="toggleSwitch()">
+      <span class="slider"></span>
+      <span class="labels" data-on="JSON" data-off="YAML"></span>
+    </label>
+  </div>
+  <div class="toolButton">
 
-  <img  (click)="toggleUndo()" class="button"  src="https://img.icons8.com/ios-glyphs/30/undo.png" alt="undo"/>
-  <img  (click)="toggleRedo()" class="button"  src="https://img.icons8.com/ios-glyphs/30/redo.png" alt="redo"/>
+    <img  (click)="toggleUndo()" class="button"  src="https://img.icons8.com/ios-glyphs/30/undo.png" alt="undo"/>
+    <img  (click)="toggleRedo()" class="button"  src="https://img.icons8.com/ios-glyphs/30/redo.png" alt="redo"/>
+
+  </div>
+  <div class="searchSection">
+
+<!--    <div id="searchContent" *ngIf="show">-->
+<!--      <div class="input-container">-->
+<!--        <input (ngModelChange)="searchOnChange($event)" [(ngModel)]="model" type="search">-->
+<!--        <label id="searchLabel" [class.hide]="model">Find</label>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <img (click)="toggleSearch()" class="button" src="https://img.icons8.com/ios/50/search&#45;&#45;v1.png" alt="search"/>-->
+
+
+
+
+
+
+
+  </div>
+
+
 
 </div>
+
+
